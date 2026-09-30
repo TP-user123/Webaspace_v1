@@ -1,26 +1,3569 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+* {
+  box-sizing: border-box;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  margin: 0;
+  padding: 0;
+  background: #050507;
+  color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ================================
+   WEBASPACE BACKGROUND
+================================ */
+
+.webaspace-background {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(0, 180, 255, 0.12),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(139, 92, 246, 0.14),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 75% 80%,
+      rgba(236, 72, 153, 0.10),
+      transparent 28%
+    ),
+    #050507;
+}
+
+/* ================================
+   ANIMATED GLOW
+================================ */
+
+.webaspace-glow {
+  position: absolute;
+  border-radius: 9999px;
+
+  filter: blur(100px);
+  opacity: 0.35;
+
+  pointer-events: none;
+
+  animation: floatingGlow 12s ease-in-out infinite alternate;
+}
+
+.webaspace-glow-blue {
+  width: 350px;
+  height: 350px;
+
+  top: 5%;
+  left: -100px;
+
+  background: #00c8ff;
+
+  animation-duration: 14s;
+}
+
+.webaspace-glow-purple {
+  width: 400px;
+  height: 400px;
+
+  top: 10%;
+  right: -150px;
+
+  background: #7c3aed;
+
+  animation-duration: 17s;
+  animation-delay: -4s;
+}
+
+.webaspace-glow-pink {
+  width: 350px;
+  height: 350px;
+
+  bottom: 5%;
+  right: 15%;
+
+  background: #ec4899;
+
+  animation-duration: 15s;
+  animation-delay: -7s;
+}
+
+@keyframes floatingGlow {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(40px, -30px, 0) scale(1.08);
+  }
+
+  100% {
+    transform: translate3d(-30px, 40px, 0) scale(0.95);
+  }
+}
+
+/* ================================
+   SUBTLE GRID
+================================ */
+
+.webaspace-grid {
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.035;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.5) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.5) 1px,
+      transparent 1px
+    );
+
+  background-size: 60px 60px;
+
+  animation: gridMove 25s linear infinite;
+}
+
+@keyframes gridMove {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 60px 60px;
+  }
+}
+
+/* ================================
+   GLASS SHELL
+================================ */
+
+.webaspace-shell {
+  position: relative;
+  width: min(1400px, calc(100% - 32px));
+  margin: 24px auto;
+  min-height: calc(100vh - 48px);
+
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 28px;
+
+  background: rgba(255,255,255,.025);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.04);
+
+  overflow: clip;
+
+  transition:
+    border-color .5s ease,
+    box-shadow .5s ease;
+}
+/* Subtle interaction with shell */
+
+.webaspace-shell:hover {
+  border-color: rgba(139, 92, 246, 0.18);
+
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* ================================
+   REDUCED MOTION
+================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .webaspace-glow,
+  .webaspace-grid {
+    animation: none;
+  }
+
+  .webaspace-shell {
+    transition: none;
+  }
+}
+
+::selection {
+  background: #8b5cf6;
+  color: #ffffff;
+} 
+
+
+
+/* Hero animations */
+
+@keyframes heroGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-fade-in {
+  animation: heroFadeIn 0.8s ease-out both;
+}
+
+.hero-fade-in-delay {
+  animation: heroFadeIn 0.8s ease-out 0.15s both;
+}
+
+.hero-fade-in-delay-2 {
+  animation: heroFadeIn 0.8s ease-out 0.3s both;
+}
+
+.hero-fade-in-delay-3 {
+  animation: heroFadeIn 0.8s ease-out 0.45s both;
+}
+
+/* =================================
+   WHY WEBASPACE
+================================= */
+
+.why-webaspace {
+  isolation: isolate;
+}
+
+
+/* =================================
+   AMBIENT BACKGROUND
+================================= */
+
+.why-orb-bg {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+
+  border-radius: 9999px;
+
+  filter: blur(110px);
+
+  opacity: 0.12;
+
+  pointer-events: none;
+
+  animation: whyOrbFloat 12s ease-in-out infinite alternate;
+}
+
+.why-orb-bg-blue {
+  left: -150px;
+  top: 25%;
+  background: #00d4ff;
+}
+
+.why-orb-bg-purple {
+  right: -150px;
+  top: 10%;
+  background: #8b5cf6;
+
+  animation-delay: -4s;
+}
+
+.why-orb-bg-pink {
+  right: 25%;
+  bottom: -180px;
+  background: #ec4899;
+
+  animation-delay: -7s;
+}
+
+@keyframes whyOrbFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(40px, -30px) scale(1.1);
+  }
+
+  100% {
+    transform: translate(-30px, 30px) scale(0.95);
+  }
+}
+
+
+/* =================================
+   GRADIENT HEADING
+================================= */
+
+.why-gradient-heading {
+  background: linear-gradient(
+    90deg,
+    #22d3ee,
+    #8b5cf6,
+    #ec4899,
+    #ff004d,
+    #22d3ee
+  );
+
+  background-size: 200% auto;
+
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+
+  animation: whyGradient 6s ease infinite;
+}
+
+@keyframes whyGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+/* =================================
+   DESKTOP LOGO RING
+================================= */
+
+.why-logo-ring {
+  background: conic-gradient(
+    from 0deg,
+    #00d4ff,
+    #4f46e5,
+    #a855f7,
+    #ec4899,
+    #ff004d,
+    #00d4ff
+  );
+
+  opacity: 0.35;
+
+  filter: blur(1px);
+
+  animation: logoRingSpin 12s linear infinite;
+}
+
+.why-logo-ring::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 2px;
+
+  border-radius: inherit;
+
+  background: #08080b;
+}
+
+@keyframes logoRingSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =================================
+   LOGO GLOW
+================================= */
+
+.why-logo-glow {
+  background: conic-gradient(
+    from 0deg,
+    #00d4ff,
+    #8b5cf6,
+    #ec4899,
+    #ff004d
+  );
+
+  filter: blur(50px);
+
+  opacity: 0.12;
+
+  animation: logoGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow {
+  from {
+    transform: scale(0.85);
+    opacity: 0.08;
+  }
+
+  to {
+    transform: scale(1.1);
+    opacity: 0.22;
+  }
+}
+
+
+/* =================================
+   LOGO CONTAINER
+================================= */
+
+.why-logo-container {
+  transition:
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.why-logo-container:hover {
+  border-color: rgba(168, 85, 247, 0.45);
+
+  box-shadow:
+    0 0 40px rgba(0, 212, 255, 0.15),
+    0 0 80px rgba(168, 85, 247, 0.12),
+    0 0 120px rgba(236, 72, 153, 0.08);
+}
+
+.why-logo-gradient {
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(0, 212, 255, 0.18),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 70% 70%,
+      rgba(236, 72, 153, 0.18),
+      transparent 40%
+    );
+}
+
+
+/* =================================
+   DESKTOP ORBITS
+================================= */
+
+.why-orbit {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 9999px;
+
+  pointer-events: none;
+
+  transform-style: preserve-3d;
+}
+
+
+/* Main orbit */
+
+.why-orbit-one {
+  width: 560px;
+  height: 560px;
+
+  transform: translate(-50%, -50%) rotate(20deg);
+
+  animation: orbitRotateOne 18s linear infinite;
+}
+
+
+/* Second orbit */
+
+.why-orbit-two {
+  width: 680px;
+  height: 360px;
+
+  transform: translate(-50%, -50%) rotate(-25deg);
+
+  animation: orbitRotateTwo 14s linear infinite reverse;
+}
+
+
+/* Orbit gradient glow */
+
+.why-orbit-one::before,
+.why-orbit-two::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -1px;
+
+  border-radius: inherit;
+
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 70deg,
+    rgba(0, 212, 255, 0.8) 100deg,
+    rgba(139, 92, 246, 0.7) 150deg,
+    rgba(236, 72, 153, 0.8) 200deg,
+    transparent 240deg,
+    transparent 360deg
+  );
+
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  mask-composite: exclude;
+
+  -webkit-mask-composite: xor;
+
+  opacity: 0.8;
+
+  filter: blur(1px);
+}
+
+
+/* Orbit animation */
+
+@keyframes orbitRotateOne {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      rotate(20deg)
+      rotateZ(0deg);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotate(20deg)
+      rotateZ(360deg);
+  }
+}
+
+@keyframes orbitRotateTwo {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      rotate(-25deg)
+      rotateZ(0deg);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotate(-25deg)
+      rotateZ(-360deg);
+  }
+}
+
+
+/* =================================
+   DESKTOP ORBIT PARTICLES
+================================= */
+
+.why-particle {
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  pointer-events: none;
+
+  box-shadow:
+    0 0 8px rgba(0, 212, 255, 0.9),
+    0 0 20px rgba(139, 92, 246, 0.8),
+    0 0 35px rgba(236, 72, 153, 0.5);
+
+  z-index: 5;
+}
+
+
+.why-particle-one {
+  left: 50%;
+  top: 50%;
+
+  animation:
+    particleOrbitOne 7s linear infinite;
+}
+
+.why-particle-two {
+  left: 50%;
+  top: 50%;
+
+  animation:
+    particleOrbitTwo 10s linear infinite;
+
+  animation-delay: -3s;
+}
+
+.why-particle-three {
+  left: 50%;
+  top: 50%;
+
+  animation:
+    particleOrbitThree 8s linear infinite reverse;
+
+  animation-delay: -5s;
+}
+
+.why-particle-four {
+  left: 50%;
+  top: 50%;
+
+  animation:
+    particleOrbitFour 12s linear infinite;
+
+  animation-delay: -7s;
+}
+
+
+/* Particle paths */
+
+@keyframes particleOrbitOne {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg)
+      translateX(280px)
+      rotate(0deg);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotate(360deg)
+      translateX(280px)
+      rotate(-360deg);
+  }
+}
+
+@keyframes particleOrbitTwo {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg)
+      translateX(340px)
+      scale(0.8);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotate(360deg)
+      translateX(340px)
+      scale(1.2);
+  }
+}
+
+@keyframes particleOrbitThree {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg)
+      translateX(220px)
+      scale(0.7);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotate(360deg)
+      translateX(220px)
+      scale(1);
+  }
+}
+
+@keyframes particleOrbitFour {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg)
+      translateX(310px)
+      rotate(0deg);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotate(-360deg)
+      translateX(310px)
+      rotate(360deg);
+  }
+}
+
+
+/* =================================
+   BENEFIT CARDS
+================================= */
+
+.why-card {
+  transition: transform 0.6s ease;
+}
+
+.why-benefit-card {
+  transition: transform 0.6s ease;
+}
+
+@media (min-width: 768px) {
+  .why-card:nth-child(1) {
+    transform: translateY(15px);
+  }
+
+  .why-card:nth-child(2) {
+    transform: translateY(15px);
+  }
+
+  .why-card:nth-child(3) {
+    transform: translateY(-15px);
+  }
+
+  .why-card:nth-child(4) {
+    transform: translateY(-15px);
+  }
+}
+
+
+/* =================================
+   MOBILE CORE
+================================= */
+
+.why-mobile-core {
+  display: none;
+}
+
+
+@media (max-width: 768px) {
+
+  /* Hide desktop orbit */
+
+  .why-orbit {
+    display: none;
+  }
+
+  .why-particle {
+    display: none;
+  }
+
+
+  /* Mobile logo system */
+
+  .why-mobile-core {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 260px;
+    height: 260px;
+
+    margin: 0 auto;
+  }
+
+
+  /* Ambient pulse */
+
+  .why-mobile-pulse {
+    position: absolute;
+
+    width: 190px;
+    height: 190px;
+
+    border-radius: 50%;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(0, 212, 255, 0.18),
+        rgba(139, 92, 246, 0.12),
+        rgba(236, 72, 153, 0.08),
+        transparent 70%
+      );
+
+    filter: blur(20px);
+
+    animation:
+      mobilePulse 4s ease-in-out infinite;
+  }
+
+
+  /* Gradient ring */
+
+  .why-mobile-ring {
+    position: absolute;
+
+    width: 190px;
+    height: 190px;
+
+    border-radius: 50%;
+
+    background: conic-gradient(
+      from 0deg,
+      #00d4ff,
+      #4f46e5,
+      #a855f7,
+      #ec4899,
+      #ff004d,
+      #00d4ff
+    );
+
+    opacity: 0.65;
+
+    animation:
+      mobileRingRotate 8s linear infinite;
+  }
+
+
+  /* Inner ring */
+
+  .why-mobile-ring::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 2px;
+
+    border-radius: 50%;
+
+    background: #08080b;
+  }
+
+
+  /* Mobile logo */
+
+  .why-mobile-logo {
+    position: relative;
+
+    z-index: 5;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    background: rgba(8, 8, 11, 0.85);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+      0 0 30px rgba(0, 212, 255, 0.12),
+      0 0 60px rgba(139, 92, 246, 0.12);
+
+    animation:
+      mobileLogoFloat 4s ease-in-out infinite;
+  }
+
+
+  /* Floating particles */
+
+  .why-mobile-particle {
+    position: absolute;
+
+    z-index: 10;
+
+    color: white;
+
+    font-size: 12px;
+
+    text-shadow:
+      0 0 8px rgba(0, 212, 255, 0.9),
+      0 0 18px rgba(168, 85, 247, 0.8);
+
+    animation:
+      mobileParticleFloat 3s ease-in-out infinite;
+  }
+
+
+  .particle-a {
+    top: 18px;
+    left: 55px;
+  }
+
+  .particle-b {
+    top: 65px;
+    right: 18px;
+
+    animation-delay: -1s;
+  }
+
+  .particle-c {
+    bottom: 25px;
+    left: 40px;
+
+    animation-delay: -2s;
+  }
+
+  .particle-d {
+    bottom: 70px;
+    right: 35px;
+
+    animation-delay: -1.5s;
+  }
+}
+
+
+/* =================================
+   MOBILE ANIMATIONS
+================================= */
+
+@keyframes mobilePulse {
+  0%,
+  100% {
+    transform: scale(0.85);
+
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: scale(1.1);
+
+    opacity: 0.9;
+  }
+}
+
+
+@keyframes mobileRingRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+@keyframes mobileLogoFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+
+@keyframes mobileParticleFloat {
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      scale(0.8);
+
+    opacity: 0.4;
+  }
+
+  50% {
+    transform:
+      translateY(-10px)
+      scale(1.2);
+
+    opacity: 1;
+  }
+}
+
+
+/* =================================
+   MOBILE CARD ADJUSTMENTS
+================================= */
+
+@media (max-width: 767px) {
+
+  .why-webaspace {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  .why-benefit-card {
+    width: 100%;
+  }
+
+  .why-card {
+    transform: none !important;
+  }
+}
+
+
+/* =================================
+   REDUCED MOTION
+================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .why-orb-bg,
+  .why-gradient-heading,
+  .why-logo-ring,
+  .why-logo-glow,
+  .why-orbit,
+  .why-particle,
+  .why-mobile-pulse,
+  .why-mobile-ring,
+  .why-mobile-logo,
+  .why-mobile-particle {
+    animation: none !important;
+  }
+}
+
+
+/* =================================
+   HOW IT WORKS
+================================= */
+
+.how-it-works {
+  isolation: isolate;
+}
+
+
+/* =================================
+   AMBIENT ORBS
+================================= */
+
+.how-orb {
+  position: absolute;
+
+  width: 320px;
+  height: 320px;
+
+  border-radius: 9999px;
+
+  filter: blur(120px);
+
+  opacity: 0.1;
+
+  pointer-events: none;
+
+  animation: howOrbFloat 14s ease-in-out infinite alternate;
+}
+
+.how-orb-blue {
+  left: -180px;
+  top: 20%;
+
+  background: #00d4ff;
+}
+
+.how-orb-purple {
+  right: -180px;
+  bottom: 10%;
+
+  background: #8b5cf6;
+
+  animation-delay: -5s;
+}
+
+@keyframes howOrbFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(35px, -30px) scale(1.08);
+  }
+
+  100% {
+    transform: translate(-25px, 30px) scale(0.95);
+  }
+}
+
+
+/* =================================
+   HEADING
+================================= */
+
+.how-gradient-text {
+  background: linear-gradient(
+    90deg,
+    #22d3ee,
+    #8b5cf6,
+    #ec4899,
+    #ff004d,
+    #22d3ee
+  );
+
+  background-size: 200% auto;
+
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+
+  animation: howGradient 6s ease infinite;
+}
+
+@keyframes howGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+/* =================================
+   PROCESS LINE
+================================= */
+
+.how-process-line {
+  position: absolute;
+
+  left: 12.5%;
+  right: 12.5%;
+
+  top: 31px;
+
+  height: 1px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  overflow: hidden;
+}
+
+.how-process-progress {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  height: 100%;
+  width: 100%;
+
+  background: linear-gradient(
+    90deg,
+    #22d3ee,
+    #8b5cf6,
+    #ec4899
+  );
+
+  transform-origin: left;
+
+  animation: processLineGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes processLineGlow {
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 0.9;
+  }
+}
+
+
+/* =================================
+   STEP NUMBER
+================================= */
+
+.how-step-number {
+  position: relative;
+
+  z-index: 5;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 62px;
+  height: 62px;
+
+  margin-bottom: 8px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: #08080b;
+
+  color: rgba(255, 255, 255, 0.35);
+
+  font-size: 11px;
+
+  letter-spacing: 0.1em;
+
+  transition:
+    border-color 0.5s ease,
+    color 0.5s ease,
+    box-shadow 0.5s ease,
+    transform 0.5s ease;
+}
+
+.how-step-number::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -4px;
+
+  border-radius: inherit;
+
+  background: linear-gradient(
+    135deg,
+    #22d3ee,
+    #8b5cf6,
+    #ec4899
+  );
+
+  opacity: 0;
+
+  filter: blur(6px);
+
+  z-index: -1;
+
+  transition: opacity 0.5s ease;
+}
+
+.group:hover .how-step-number,
+.how-step-active {
+  border-color: rgba(168, 85, 247, 0.5);
+
+  color: white;
+
+  box-shadow:
+    0 0 25px rgba(139, 92, 246, 0.18),
+    inset 0 0 20px rgba(139, 92, 246, 0.05);
+
+  transform: scale(1.06);
+}
+
+.group:hover .how-step-number::before,
+.how-step-active::before {
+  opacity: 0.5;
+}
+
+
+/* =================================
+   STEP CARD
+================================= */
+
+.how-step-card {
+  position: relative;
+
+  min-height: 245px;
+
+  padding: 28px;
+
+  margin-top: 18px;
+
+  border-radius: 24px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.025);
+
+  backdrop-filter: blur(20px);
+
+  transition:
+    transform 0.5s ease,
+    border-color 0.5s ease,
+    background 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.how-step-card::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: inherit;
+
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      rgba(0, 212, 255, 0.08),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(236, 72, 153, 0.08),
+      transparent 35%
+    );
+
+  opacity: 0;
+
+  transition: opacity 0.6s ease;
+}
+
+.group:hover .how-step-card,
+.how-step-card-active {
+  transform: translateY(-8px);
+
+  border-color: rgba(168, 85, 247, 0.25);
+
+  background: rgba(255, 255, 255, 0.04);
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25),
+    0 0 50px rgba(139, 92, 246, 0.06);
+}
+
+.group:hover .how-step-card::before,
+.how-step-card-active::before {
+  opacity: 1;
+}
+
+
+/* =================================
+   MOBILE CARDS
+================================= */
+
+.how-mobile-card {
+  width: 100%;
+
+  padding: 18px;
+
+  text-align: left;
+
+  border-radius: 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.025);
+
+  backdrop-filter: blur(20px);
+
+  transition:
+    border-color 0.5s ease,
+    background 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.how-mobile-card-active {
+  border-color: rgba(168, 85, 247, 0.25);
+
+  background: rgba(255, 255, 255, 0.04);
+
+  box-shadow:
+    0 15px 45px rgba(0, 0, 0, 0.25),
+    0 0 40px rgba(139, 92, 246, 0.06);
+}
+
+
+/* Mobile number */
+
+.how-mobile-number {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.025);
+
+  color: rgba(255, 255, 255, 0.3);
+
+  font-size: 10px;
+
+  letter-spacing: 0.08em;
+
+  transition:
+    border-color 0.5s ease,
+    color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.how-mobile-number-active {
+  border-color: rgba(168, 85, 247, 0.45);
+
+  color: white;
+
+  box-shadow:
+    0 0 25px rgba(139, 92, 246, 0.15);
+}
+
+
+/* =================================
+   REDUCED MOTION
+================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .how-orb,
+  .how-gradient-text,
+  .how-process-progress {
+    animation: none;
+  }
+}
+
+
+/* =================================
+   CTA SECTION
+================================= */
+
+.webaspace-cta {
+  isolation: isolate;
+}
+
+/* =========================================================
+   WEBASPACE CTA
+========================================================= */
+
+.webaspace-cta {
+  position: relative;
+}
+
+.cta-container {
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(124, 58, 237, 0.10),
+      transparent 45%
+    ),
+    rgba(255, 255, 255, 0.025);
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+
+/* Ambient glows */
+
+.cta-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  pointer-events: none;
+  opacity: 0.25;
+}
+
+.cta-glow-blue {
+  width: 350px;
+  height: 350px;
+  left: -150px;
+  top: 10%;
+  background: #00c8ff;
+}
+
+.cta-glow-purple {
+  width: 450px;
+  height: 450px;
+  right: -200px;
+  top: 20%;
+  background: #7c3aed;
+}
+
+.cta-glow-pink {
+  width: 300px;
+  height: 300px;
+  left: 35%;
+  bottom: -150px;
+  background: #ec4899;
+}
+
+
+/* Grid */
+
+.cta-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.5) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.5) 1px,
+      transparent 1px
+    );
+
+  background-size: 55px 55px;
+  pointer-events: none;
+}
+
+
+/* Top glow */
+
+.cta-top-glow {
+  position: absolute;
+  top: -150px;
+  left: 50%;
+  width: 500px;
+  height: 300px;
+  transform: translateX(-50%);
+
+  background: radial-gradient(
+    ellipse,
+    rgba(124, 58, 237, 0.15),
+    transparent 70%
+  );
+
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+
+/* Gradient heading */
+
+.cta-gradient-text {
+  background: linear-gradient(
+    90deg,
+    #22d3ee,
+    #8b5cf6,
+    #ec4899
+  );
+
+  background-size: 200% 200%;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  animation: ctaGradient 7s ease infinite;
+}
+
+@keyframes ctaGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.contact-form {
+  width: 100%;
+}
+
+
+/* Labels */
+
+.contact-field label,
+.contact-selection-label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 0.82rem;
+  font-weight: 600;
+
+  letter-spacing: 0.02em;
+
+  color: rgba(255, 255, 255, 0.72);
+}
+
+
+/* Inputs */
+
+.contact-field input,
+.contact-field select,
+.contact-field textarea {
+  width: 100%;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 1rem;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  padding: 0.95rem 1rem;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  color: rgba(255, 255, 255, 0.95);
+
+  outline: none;
+
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+/* Placeholder */
+
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+
+/* Focus */
+
+.contact-field input:focus,
+.contact-field select:focus,
+.contact-field textarea:focus {
+  border-color: rgba(139, 92, 246, 0.65);
+
+  background: rgba(255, 255, 255, 0.065);
+
+  box-shadow:
+    0 0 0 3px rgba(139, 92, 246, 0.08),
+    0 0 30px rgba(124, 58, 237, 0.08);
+}
+
+
+/* Textarea */
+
+.contact-field textarea {
+  resize: vertical;
+  min-height: 150px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   SELECTION BUTTONS
+========================================================= */
+
+.contact-option {
+  position: relative;
+
+  min-height: 52px;
+
+  border: 1px solid rgba(255, 255, 255, 0.11);
+
+  border-radius: 0.95rem;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  padding: 0.75rem 0.7rem;
+
+  font-size: 0.84rem;
+  font-weight: 600;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  transition:
+    all 0.3s ease;
+}
+
+
+.contact-option:hover {
+  border-color: rgba(139, 92, 246, 0.45);
+
+  background: rgba(255, 255, 255, 0.065);
+
+  color: white;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Selected */
+
+.contact-option-active {
+  border-color: transparent;
+
+  background:
+    linear-gradient(#0c0c12, #0c0c12) padding-box,
+    linear-gradient(
+      110deg,
+      #22d3ee,
+      #8b5cf6,
+      #ec4899
+    ) border-box;
+
+  color: white;
+
+  box-shadow:
+    0 0 25px rgba(139, 92, 246, 0.12),
+    inset 0 0 25px rgba(139, 92, 246, 0.04);
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.contact-field select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.contact-field select option {
+  background: #0b0b0f;
+  color: white;
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.contact-submit {
+  transition: transform 0.3s ease;
+}
+
+.contact-submit:hover {
+  transform: translateY(-2px);
+}
+
+
+/* Spinner */
+
+.contact-spinner {
+  width: 15px;
+  height: 15px;
+
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: white;
+
+  border-radius: 50%;
+
+  animation: contactSpin 0.8s linear infinite;
+}
+
+@keyframes contactSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Error */
+
+.contact-error {
+  margin-top: 1.25rem;
+
+  border: 1px solid rgba(239, 68, 68, 0.25);
+
+  border-radius: 1rem;
+
+  background: rgba(239, 68, 68, 0.06);
+
+  padding: 0.9rem 1rem;
+
+  text-align: center;
+
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  color: rgba(252, 165, 165, 0.95);
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.contact-success {
+  min-height: 400px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 2rem;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  padding: 3rem;
+}
+
+
+.contact-success-icon {
+  display: flex;
+
+  width: 70px;
+  height: 70px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #22d3ee,
+      #8b5cf6,
+      #ec4899
+    );
+
+  box-shadow:
+    0 0 45px rgba(139, 92, 246, 0.3);
+
+  font-size: 1.8rem;
+  font-weight: 700;
+
+  color: white;
+}
+
+
+/* =========================================================
+   DECORATIVE CORNERS
+========================================================= */
+
+.cta-corner {
+  position: absolute;
+
+  width: 45px;
+  height: 45px;
+
+  pointer-events: none;
+}
+
+.cta-corner-top-left {
+  top: 25px;
+  left: 25px;
+
+  border-top: 1px solid rgba(34, 211, 238, 0.35);
+  border-left: 1px solid rgba(34, 211, 238, 0.35);
+
+  border-top-left-radius: 12px;
+}
+
+.cta-corner-top-right {
+  top: 25px;
+  right: 25px;
+
+  border-top: 1px solid rgba(236, 72, 153, 0.35);
+  border-right: 1px solid rgba(236, 72, 153, 0.35);
+
+  border-top-right-radius: 12px;
+}
+
+.cta-corner-bottom-left {
+  bottom: 25px;
+  left: 25px;
+
+  border-bottom: 1px solid rgba(34, 211, 238, 0.35);
+  border-left: 1px solid rgba(34, 211, 238, 0.35);
+
+  border-bottom-left-radius: 12px;
+}
+
+.cta-corner-bottom-right {
+  right: 25px;
+  bottom: 25px;
+
+  border-bottom: 1px solid rgba(236, 72, 153, 0.35);
+  border-right: 1px solid rgba(236, 72, 153, 0.35);
+
+  border-bottom-right-radius: 12px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+
+  .contact-option {
+    min-height: 50px;
+
+    font-size: 0.78rem;
+
+    padding: 0.65rem 0.4rem;
+  }
+
+  .contact-field input,
+  .contact-field select,
+  .contact-field textarea {
+    font-size: 0.9rem;
+  }
+
+  .contact-success {
+    min-height: 350px;
+    padding: 2rem 1.25rem;
+  }
+
+  .cta-corner {
+    width: 30px;
+    height: 30px;
+  }
+
+  .cta-corner-top-left,
+  .cta-corner-top-right {
+    top: 15px;
+  }
+
+  .cta-corner-bottom-left,
+  .cta-corner-bottom-right {
+    bottom: 15px;
+  }
+
+  .cta-corner-top-left,
+  .cta-corner-bottom-left {
+    left: 15px;
+  }
+
+  .cta-corner-top-right,
+  .cta-corner-bottom-right {
+    right: 15px;
+  }
+}
+/* =========================================================
+   PRICE ESTIMATOR
+========================================================= */
+
+.price-estimate {
+  position: relative;
+
+  margin-top: 1.75rem;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  border-radius: 1.5rem;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  padding: 1.25rem;
+
+  transition:
+    border-color 0.5s ease,
+    background 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+
+.price-estimate-active {
+  border-color: rgba(139, 92, 246, 0.3);
+
+  background:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(34, 211, 238, 0.06),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 50%,
+      rgba(236, 72, 153, 0.06),
+      transparent 35%
+    ),
+    rgba(255, 255, 255, 0.035);
+
+  box-shadow:
+    0 15px 50px rgba(124, 58, 237, 0.08);
+}
+
+
+/* Empty state */
+
+.price-empty {
+  display: flex;
+
+  align-items: center;
+
+  gap: 1rem;
+}
+
+
+.price-icon {
+  display: flex;
+
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(139, 92, 246, 0.2);
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34, 211, 238, 0.08),
+      rgba(236, 72, 153, 0.08)
+    );
+
+  color: rgba(255, 255, 255, 0.7);
+
+  animation: pricePulse 3s ease-in-out infinite;
+}
+
+
+@keyframes pricePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(139, 92, 246, 0);
+  }
+
+  50% {
+    box-shadow:
+      0 0 25px rgba(139, 92, 246, 0.18);
+  }
+}
+
+
+.price-empty h3 {
+  font-size: 0.9rem;
+
+  font-weight: 600;
+
+  color: rgba(255, 255, 255, 0.85);
+}
+
+
+.price-empty p {
+  margin-top: 0.3rem;
+
+  font-size: 0.78rem;
+
+  font-weight: 500;
+
+  line-height: 1.4;
+
+  color: rgba(255, 255, 255, 0.4);
+}
+
+
+/* Result */
+
+.price-result {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 1rem;
+}
+
+
+.price-label {
+  display: block;
+
+  font-size: 0.72rem;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.15em;
+
+  color: rgba(255, 255, 255, 0.45);
+}
+
+
+.price-value {
+  margin-top: 0.4rem;
+
+  font-size: clamp(1.5rem, 4vw, 2.3rem);
+
+  font-weight: 700;
+
+  letter-spacing: -0.04em;
+
+  background:
+    linear-gradient(
+      90deg,
+      #22d3ee,
+      #8b5cf6,
+      #ec4899
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
+
+.price-value span {
+  margin: 0 0.35rem;
+
+  color: rgba(255, 255, 255, 0.3);
+
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.3);
+}
+
+
+.price-note {
+  margin-top: 0.35rem;
+
+  font-size: 0.75rem;
+
+  font-weight: 500;
+
+  color: rgba(255, 255, 255, 0.4);
+}
+
+
+.price-spark {
+  display: flex;
+
+  width: 50px;
+  height: 50px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34, 211, 238, 0.12),
+      rgba(139, 92, 246, 0.12),
+      rgba(236, 72, 153, 0.12)
+    );
+
+  color: #c4b5fd;
+
+  font-size: 1.2rem;
+
+  box-shadow:
+    0 0 30px rgba(139, 92, 246, 0.12);
+
+  animation:
+    priceSpark 3s ease-in-out infinite;
+}
+
+
+@keyframes priceSpark {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    transform: scale(1.08) rotate(8deg);
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 640px) {
+
+  .price-result {
+    align-items: flex-start;
+  }
+
+  .price-spark {
+    width: 42px;
+    height: 42px;
+
+    font-size: 1rem;
+  }
+
+  .price-value {
+    font-size: 1.5rem;
+  }
+}
+/* =========================================================
+   PRICE ESTIMATOR
+========================================================= */
+
+.price-estimate {
+  position: relative;
+
+  margin-top: 1.75rem;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  border-radius: 1.5rem;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  padding: 1.25rem;
+
+  transition:
+    border-color 0.5s ease,
+    background 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+
+.price-estimate-active {
+  border-color: rgba(139, 92, 246, 0.35);
+
+  background:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(34, 211, 238, 0.07),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 50%,
+      rgba(236, 72, 153, 0.07),
+      transparent 35%
+    ),
+    rgba(255, 255, 255, 0.035);
+
+  box-shadow:
+    0 15px 50px rgba(124, 58, 237, 0.1);
+}
+
+
+/* Empty */
+
+.price-empty {
+  display: flex;
+
+  align-items: center;
+
+  gap: 1rem;
+}
+
+
+.price-icon {
+  display: flex;
+
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(139, 92, 246, 0.2);
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34, 211, 238, 0.08),
+      rgba(236, 72, 153, 0.08)
+    );
+
+  color: rgba(255, 255, 255, 0.7);
+
+  animation:
+    pricePulse 3s ease-in-out infinite;
+}
+
+
+@keyframes pricePulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 rgba(139, 92, 246, 0);
+  }
+
+  50% {
+    box-shadow:
+      0 0 25px rgba(139, 92, 246, 0.18);
+  }
+}
+
+
+.price-empty h3 {
+  font-size: 0.9rem;
+
+  font-weight: 600;
+
+  color: rgba(255, 255, 255, 0.88);
+}
+
+
+.price-empty p {
+  margin-top: 0.3rem;
+
+  font-size: 0.78rem;
+
+  font-weight: 500;
+
+  line-height: 1.5;
+
+  color: rgba(255, 255, 255, 0.48);
+}
+
+
+/* Result */
+
+.price-result {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 1rem;
+}
+
+
+.price-label {
+  display: block;
+
+  font-size: 0.72rem;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.15em;
+
+  color: rgba(255, 255, 255, 0.5);
+}
+
+
+.price-value {
+  margin-top: 0.4rem;
+
+  font-size: clamp(
+    1.5rem,
+    4vw,
+    2.3rem
+  );
+
+  font-weight: 700;
+
+  letter-spacing: -0.04em;
+
+  background:
+    linear-gradient(
+      90deg,
+      #22d3ee,
+      #8b5cf6,
+      #ec4899
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
+
+.price-value span {
+  margin: 0 0.35rem;
+
+  color: rgba(255, 255, 255, 0.3);
+
+  -webkit-text-fill-color:
+    rgba(255, 255, 255, 0.3);
+}
+
+
+.price-note {
+  margin-top: 0.35rem;
+
+  font-size: 0.75rem;
+
+  font-weight: 500;
+
+  color: rgba(255, 255, 255, 0.45);
+}
+
+
+.price-spark {
+  display: flex;
+
+  width: 50px;
+  height: 50px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34, 211, 238, 0.12),
+      rgba(139, 92, 246, 0.12),
+      rgba(236, 72, 153, 0.12)
+    );
+
+  color: #c4b5fd;
+
+  font-size: 1.2rem;
+
+  box-shadow:
+    0 0 30px rgba(139, 92, 246, 0.12);
+
+  animation:
+    priceSpark 3s ease-in-out infinite;
+}
+
+
+@keyframes priceSpark {
+
+  0%,
+  100% {
+    transform:
+      scale(1)
+      rotate(0deg);
+  }
+
+  50% {
+    transform:
+      scale(1.08)
+      rotate(8deg);
+  }
+}
+
+
+/* =========================================================
+   CTA FORM VISIBILITY
+========================================================= */
+
+.contact-field label,
+.contact-selection-label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 0.84rem;
+
+  font-weight: 600;
+
+  letter-spacing: 0.01em;
+
+  color: rgba(255, 255, 255, 0.78);
+}
+
+
+.contact-field input,
+.contact-field select,
+.contact-field textarea {
+  width: 100%;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.13);
+
+  border-radius: 1rem;
+
+  background:
+    rgba(255, 255, 255, 0.045);
+
+  padding:
+    0.95rem 1rem;
+
+  font-size: 0.95rem;
+
+  font-weight: 500;
+
+  color:
+    rgba(255, 255, 255, 0.96);
+
+  outline: none;
+
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+  color:
+    rgba(255, 255, 255, 0.42);
+}
+
+
+.contact-field input:focus,
+.contact-field select:focus,
+.contact-field textarea:focus {
+
+  border-color:
+    rgba(139, 92, 246, 0.65);
+
+  background:
+    rgba(255, 255, 255, 0.065);
+
+  box-shadow:
+    0 0 0 3px
+      rgba(139, 92, 246, 0.08),
+    0 0 30px
+      rgba(124, 58, 237, 0.08);
+}
+
+
+.contact-field select {
+  appearance: none;
+
+  cursor: pointer;
+}
+
+
+.contact-field select option {
+  background: #0b0b0f;
+
+  color: white;
+}
+
+
+.contact-field textarea {
+  resize: vertical;
+
+  min-height: 150px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.contact-submit {
+  transition:
+    transform 0.3s ease;
+}
+
+
+.contact-submit:hover {
+  transform:
+    translateY(-2px);
+}
+
+
+.contact-spinner {
+  width: 15px;
+  height: 15px;
+
+  border:
+    2px solid
+    rgba(255, 255, 255, 0.25);
+
+  border-top-color: white;
+
+  border-radius: 50%;
+
+  animation:
+    contactSpin 0.8s linear infinite;
+}
+
+
+@keyframes contactSpin {
+  to {
+    transform:
+      rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.contact-success {
+  min-height: 400px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  border-radius: 2rem;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  padding: 3rem;
+}
+
+
+.contact-success-icon {
+  display: flex;
+
+  width: 70px;
+  height: 70px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #22d3ee,
+      #8b5cf6,
+      #ec4899
+    );
+
+  box-shadow:
+    0 0 45px
+    rgba(139, 92, 246, 0.3);
+
+  font-size: 1.8rem;
+
+  font-weight: 700;
+
+  color: white;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.contact-error {
+  margin-top: 1.25rem;
+
+  border:
+    1px solid
+    rgba(239, 68, 68, 0.25);
+
+  border-radius: 1rem;
+
+  background:
+    rgba(239, 68, 68, 0.06);
+
+  padding:
+    0.9rem 1rem;
+
+  text-align: center;
+
+  font-size: 0.85rem;
+
+  font-weight: 500;
+
+  color:
+    rgba(252, 165, 165, 0.95);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+
+  .price-result {
+    align-items: flex-start;
+  }
+
+
+  .price-spark {
+    width: 42px;
+    height: 42px;
+
+    font-size: 1rem;
+  }
+
+
+  .price-value {
+    font-size: 1.5rem;
+  }
+
+
+  .contact-field input,
+  .contact-field select,
+  .contact-field textarea {
+    font-size: 0.9rem;
+  }
+
+
+  .contact-success {
+    min-height: 350px;
+
+    padding:
+      2rem 1.25rem;
+  }
+}
+
+/* =========================================================
+   WEBASPACE FOOTER
+========================================================= */
+
+.webaspace-footer {
+  position: relative;
+}
+
+
+/* Container */
+
+.footer-container {
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(34, 211, 238, 0.04),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(139, 92, 246, 0.05),
+      transparent 30%
+    ),
+    rgba(255, 255, 255, 0.025);
+
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+
+/* Grid */
+
+.footer-grid {
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.025;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.5) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.5) 1px,
+      transparent 1px
+    );
+
+  background-size: 60px 60px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   GLOWS
+========================================================= */
+
+.footer-glow {
+  position: absolute;
+
+  border-radius: 9999px;
+
+  filter: blur(110px);
+
+  pointer-events: none;
+
+  opacity: 0.2;
+}
+
+
+.footer-glow-blue {
+  width: 300px;
+  height: 300px;
+
+  left: -150px;
+  bottom: 10%;
+
+  background: #00c8ff;
+}
+
+
+.footer-glow-purple {
+  width: 350px;
+  height: 350px;
+
+  right: -180px;
+  top: 10%;
+
+  background: #7c3aed;
+}
+
+
+.footer-glow-pink {
+  width: 220px;
+  height: 220px;
+
+  left: 45%;
+  bottom: -150px;
+
+  background: #ec4899;
+}
+
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+.footer-link {
+  position: relative;
+
+  font-size: 0.875rem;
+
+  font-weight: 500;
+
+  color: rgba(255, 255, 255, 0.48);
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.footer-link:hover {
+  color: rgba(255, 255, 255, 0.95);
+
+  transform: translateX(3px);
+}
+
+
+.footer-link-arrow {
+  font-size: 0.75rem;
+
+  color: rgba(255, 255, 255, 0.15);
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.footer-link:hover .footer-link-arrow {
+  color: #c4b5fd;
+
+  transform: translateX(2px);
+}
+
+
+/* =========================================================
+   START PROJECT
+========================================================= */
+
+.footer-project-link {
+  position: relative;
+
+  padding-bottom: 5px;
+
+  font-size: 0.875rem;
+
+  font-weight: 600;
+
+  color: rgba(255, 255, 255, 0.75);
+
+  transition:
+    color 0.3s ease;
+}
+
+
+.footer-project-link::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #22d3ee,
+      #8b5cf6,
+      #ec4899
+    );
+
+  transform:
+    scaleX(0);
+
+  transform-origin: left;
+
+  transition:
+    transform 0.4s ease;
+}
+
+
+.footer-project-link:hover {
+  color: white;
+}
+
+
+.footer-project-link:hover::after {
+  transform: scaleX(1);
+}
+
+
+/* =========================================================
+   HEART
+========================================================= */
+
+.footer-heart {
+  background:
+    linear-gradient(
+      90deg,
+      #22d3ee,
+      #8b5cf6,
+      #ec4899
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  animation:
+    footerHeartPulse 3s ease-in-out infinite;
+}
+
+
+@keyframes footerHeartPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+
+/* =========================================================
+   DECORATIVE CORNERS
+========================================================= */
+
+.footer-corner {
+  position: absolute;
+
+  width: 40px;
+  height: 40px;
+
+  pointer-events: none;
+}
+
+
+.footer-corner-top-left {
+  top: 20px;
+  left: 20px;
+
+  border-top:
+    1px solid
+    rgba(34, 211, 238, 0.25);
+
+  border-left:
+    1px solid
+    rgba(34, 211, 238, 0.25);
+
+  border-top-left-radius: 10px;
+}
+
+
+.footer-corner-top-right {
+  top: 20px;
+  right: 20px;
+
+  border-top:
+    1px solid
+    rgba(236, 72, 153, 0.25);
+
+  border-right:
+    1px solid
+    rgba(236, 72, 153, 0.25);
+
+  border-top-right-radius: 10px;
+}
+
+
+.footer-corner-bottom-left {
+  bottom: 20px;
+  left: 20px;
+
+  border-bottom:
+    1px solid
+    rgba(34, 211, 238, 0.25);
+
+  border-left:
+    1px solid
+    rgba(34, 211, 238, 0.25);
+
+  border-bottom-left-radius: 10px;
+}
+
+
+.footer-corner-bottom-right {
+  right: 20px;
+  bottom: 20px;
+
+  border-bottom:
+    1px solid
+    rgba(236, 72, 153, 0.25);
+
+  border-right:
+    1px solid
+    rgba(236, 72, 153, 0.25);
+
+  border-bottom-right-radius: 10px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+
+  .footer-container {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .footer-corner {
+    width: 28px;
+    height: 28px;
+  }
+
+
+  .footer-corner-top-left,
+  .footer-corner-top-right {
+    top: 14px;
+  }
+
+
+  .footer-corner-bottom-left,
+  .footer-corner-bottom-right {
+    bottom: 14px;
+  }
+
+
+  .footer-corner-top-left,
+  .footer-corner-bottom-left {
+    left: 14px;
+  }
+
+
+  .footer-corner-top-right,
+  .footer-corner-bottom-right {
+    right: 14px;
+  }
+}
+
+
+/* =========================================
+   WEBA SPACE — SPACE TRAVEL BACKGROUND
+========================================= */
+
+.space-background {
+  position: fixed;
+  inset: 0;
+  z-index: -20;
+  overflow: hidden;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(30, 20, 70, 0.2),
+      transparent 55%
+    ),
+    #020205;
+}
+
+/* =========================================
+   STARS
+========================================= */
+
+.space-stars {
+  position: absolute;
+  inset: -50%;
+  background-repeat: repeat;
+  pointer-events: none;
+}
+
+.space-stars-far {
+  opacity: 0.25;
+
+  background-image:
+    radial-gradient(circle, white 1px, transparent 1px);
+
+  background-size: 180px 180px;
+
+  transform: translate3d(
+    0,
+    calc(var(--scroll-y, 0px) * -0.02),
+    0
+  );
+}
+
+.space-stars-mid {
+  opacity: 0.4;
+
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.8) 1px, transparent 1px);
+
+  background-size: 110px 110px;
+
+  transform: translate3d(
+    0,
+    calc(var(--scroll-y, 0px) * -0.05),
+    0
+  );
+}
+
+.space-stars-near {
+  opacity: 0.55;
+
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.9) 1.5px, transparent 1.5px);
+
+  background-size: 70px 70px;
+
+  transform: translate3d(
+    0,
+    calc(var(--scroll-y, 0px) * -0.1),
+    0
+  );
+}
+
+
+/* =========================================
+   NEBULAS
+========================================= */
+
+.space-nebula {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(100px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.space-nebula-blue {
+  width: 500px;
+  height: 500px;
+  top: 5%;
+  left: -180px;
+
+  background: rgba(0, 180, 255, 0.12);
+
+  transform: translate3d(
+    0,
+    calc(var(--scroll-y, 0px) * -0.12),
+    0
+  );
+}
+
+.space-nebula-purple {
+  width: 600px;
+  height: 600px;
+  top: 35%;
+  right: -250px;
+
+  background: rgba(124, 58, 237, 0.13);
+
+  transform: translate3d(
+    0,
+    calc(var(--scroll-y, 0px) * -0.18),
+    0
+  );
+}
+
+.space-nebula-pink {
+  width: 450px;
+  height: 450px;
+  top: 75%;
+  left: 15%;
+
+  background: rgba(236, 72, 153, 0.10);
+
+  transform: translate3d(
+    0,
+    calc(var(--scroll-y, 0px) * -0.08),
+    0
+  );
+}
+
+
+/* =========================================
+   PLANETS
+========================================= */
+
+.space-planet {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+
+  will-change: transform;
+}
+
+
+/* ---------- Planet One ---------- */
+
+.space-planet-one {
+  width: 180px;
+  height: 180px;
+
+  top: 22%;
+  right: 8%;
+
+  transform:
+    translate3d(
+      0,
+      calc(var(--scroll-y, 0px) * -0.22),
+      0
+    )
+    rotate(15deg);
+}
+
+.space-planet-one .planet-surface {
+  position: absolute;
+  inset: 0;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #7dd3fc,
+      #2563eb 35%,
+      #172554 70%,
+      #020617
+    );
+
+  box-shadow:
+    inset -30px -20px 50px rgba(0,0,0,.7),
+    0 0 70px rgba(37,99,235,.25);
+}
+
+
+/* ---------- Planet Two ---------- */
+
+.space-planet-two {
+  width: 110px;
+  height: 110px;
+
+  top: 52%;
+  left: 6%;
+
+  transform:
+    translate3d(
+      0,
+      calc(var(--scroll-y, 0px) * -0.32),
+      0
+    );
+}
+
+.space-planet-two .planet-surface {
+  position: absolute;
+  inset: 0;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      #f0abfc,
+      #a855f7 35%,
+      #3b0764 75%,
+      #090014
+    );
+
+  box-shadow:
+    inset -20px -15px 35px rgba(0,0,0,.7),
+    0 0 60px rgba(168,85,247,.25);
+}
+
+
+/* ---------- Planet Three ---------- */
+
+.space-planet-three {
+  width: 240px;
+  height: 240px;
+
+  top: 82%;
+  right: 12%;
+
+  transform:
+    translate3d(
+      0,
+      calc(var(--scroll-y, 0px) * -0.4),
+      0
+    );
+}
+
+.space-planet-three .planet-surface {
+  position: absolute;
+  inset: 0;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #f9a8d4,
+      #ec4899 35%,
+      #701a75 65%,
+      #190019
+    );
+
+  box-shadow:
+    inset -40px -30px 60px rgba(0,0,0,.7),
+    0 0 90px rgba(236,72,153,.2);
+}
+
+
+/* =========================================
+   PLANET GLOW
+========================================= */
+
+.planet-glow {
+  position: absolute;
+  inset: -30px;
+
+  border-radius: 50%;
+
+  background: inherit;
+
+  filter: blur(35px);
+  opacity: 0.25;
+}
+
+
+/* =========================================
+   PLANET RINGS
+========================================= */
+
+.planet-ring {
+  position: absolute;
+
+  width: 150%;
+  height: 35%;
+
+  top: 35%;
+  left: -25%;
+
+  border: 1px solid rgba(255,255,255,.18);
+
+  border-radius: 50%;
+
+  transform: rotate(-18deg);
+
+  box-shadow:
+    0 0 20px rgba(168,85,247,.12);
+}
+
+
+/* =========================================
+   MOVING PARTICLES
+========================================= */
+
+.space-particle {
+  position: absolute;
+
+  width: 3px;
+  height: 3px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  box-shadow: 0 0 12px rgba(255,255,255,.8);
+
+  will-change: transform;
+}
+
+.particle-1 {
+  top: 20%;
+  left: 30%;
+
+  transform:
+    translate3d(
+      0,
+      calc(var(--scroll-y, 0px) * -0.5),
+      0
+    );
+}
+
+.particle-2 {
+  top: 40%;
+  left: 70%;
+
+  transform:
+    translate3d(
+      0,
+      calc(var(--scroll-y, 0px) * -0.35),
+      0
+    );
+}
+
+.particle-3 {
+  top: 60%;
+  left: 40%;
+
+  transform:
+    translate3d(
+      0,
+      calc(var(--scroll-y, 0px) * -0.65),
+      0
+    );
+}
+
+.particle-4 {
+  top: 75%;
+  left: 80%;
+
+  transform:
+    translate3d(
+      0,
+      calc(var(--scroll-y, 0px) * -0.45),
+      0
+    );
+}
+
+.particle-5 {
+  top: 90%;
+  left: 20%;
+
+  transform:
+    translate3d(
+      0,
+      calc(var(--scroll-y, 0px) * -0.75),
+      0
+    );
+}
+
+
+/* =========================================
+   VIGNETTE
+========================================= */
+
+.space-vignette {
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 35%,
+      rgba(0,0,0,.45) 100%
+    );
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+  .space-planet-one {
+    width: 100px;
+    height: 100px;
+    right: -30px;
+  }
+
+  .space-planet-two {
+    width: 70px;
+    height: 70px;
+    left: -20px;
+  }
+
+  .space-planet-three {
+    width: 140px;
+    height: 140px;
+    right: -40px;
+  }
+
+  .space-nebula {
+    filter: blur(80px);
+  }
+
+  .space-stars-near {
+    opacity: 0.35;
+  }
+}
+
+
+/* =========================================
+   REDUCE MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .space-stars,
+  .space-nebula,
+  .space-planet,
+  .space-particle {
+    transform: none !important;
+  }
 }
